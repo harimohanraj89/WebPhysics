@@ -1,0 +1,59 @@
+/* ======================================= */
+/*				style.css				   */
+/* ======================================= */
+
+@background-main:#fbfbfd;
+@background-side:#030021;
+@font-main:#22222d;
+@canvas-background:#ddd;
+@canvas-border:#222;
+
+html {
+	height:100%;
+}
+
+body {
+	margin : 0;
+	background-color : @background-main - #cfcfcf;
+	height:100%;
+}
+
+#site {
+	width : 80%;
+	max-width: 760px;
+	min-height:100%;
+
+	margin-top:0;
+	margin-bottom:0;
+	margin-left : auto;
+	margin-right: auto;
+	padding-top:  10px;
+	padding-left: 100px;
+	padding-right:100px;
+
+	border-right:1px solid @background-main - #333;
+	border-left:1px solid @background-main - #333;
+	color:@font-main;
+	background-color: @background-main;
+
+	h1 {
+		padding:0;
+		margin-top:24px;
+		margin-bottom:96px;
+		text-align:center;
+		font-size : 72px;
+	}
+
+	p {
+		font-size : 24px;
+	}
+
+	#mainCanvas {
+		width:600px;
+		height:400px;
+		background-color:@canvas-background;
+		border:2px solid @canvas-border;
+	}
+
+}
+
