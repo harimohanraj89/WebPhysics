@@ -72,8 +72,8 @@ Vec2.prototype.Sub = function (argVec) {
 }
 
 Vec2.prototype.Mult = function (argScalar) {
-	this.x *= argVec.x;
-	this.y *= argVec.y;
+	this.x *= argScalar;
+	this.y *= argScalar;
 }
 
 // ------------------------

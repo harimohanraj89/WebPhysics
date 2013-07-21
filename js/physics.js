@@ -2,23 +2,53 @@
  * @author Hariharan Mohanraj
  */
 
+var BOXHEIGHT = 8;
+var BOXWIDTH  = 12;
+var GRAVITY   = new Vec2(0,-100);
+var DELTA     = 0.01;
+
+var c;
+var ctx;
+var ball1;
+var ball2;
+
 window.onload = function () {
 
-	var BOXHEIGHT = 8;
-	var BOXWIDTH  = 12;
-
-	var c = document.getElementById("mainCanvas");
+	c = document.getElementById("mainCanvas");
 	c.width = 1200;
 	c.height = 800;
-	var ctx = c.getContext("2d");
+	ctx = c.getContext("2d");
 
-	var ball1 = new Ball(1,new Vec2(2,2),c);
-	var ball2 = new Ball(1,new Vec2(10,2),c);
+	ball1 = new Ball(1,new Vec2(2,6),1,c);
+	ball2 = new Ball(1,new Vec2(10,5),1,c);
 
 	ball1.Draw(ctx,100);
 	ball2.Draw(ctx,100);
 
-	if (ball1.radius + ball2.radius > Vec2.Sub(ball1.position,ball2.position).Magnitude() ) {
-		console.log('Collision!');
-	}
+	UpdateForces();
+
+	console.log(GRAVITY);
+	console.log(ball1);
+	console.log(ball2);
+}
+
+UpdateBalls = function () {
+	ball1.PreVerlet(DELTA);
+	ball2.PreVerlet(DELTA);
+
+	UpdateForces();
+
+	ball1.PostVerlet(DELTA);
+	ball2.PostVerlet(DELTA);
+
+	ctx.clearRect(0,0,c.width,c.height);
+	ball1.Draw(ctx,100);
+	ball2.Draw(ctx,100);
+}
+
+UpdateForces = function () {
+	ball1.ResetForce();
+	ball2.ResetForce();
+	ball1.AddForce(GRAVITY);
+	ball2.AddForce(GRAVITY);
 }

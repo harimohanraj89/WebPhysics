@@ -15,12 +15,13 @@
 // 		Constructor
 // ------------------------
 
-function Ball (argRadius, argPosition, canvas) {
+function Ball (argRadius, argPosition, argDensity, canvas) {
 	this.radius 		= argRadius;
 	this.position 		= argPosition;
 	this.velocity 		= new Vec2(0,0);
-	this.force 			= new Vec2(0,0);
-	this.nextforce 		= new Vec2(0,0);
+	this.force 			= new Vec2(1,1);
+	this.density 		= argDensity;
+	this.imass			= 1/(argDensity * this.radius * this.radius);
 	this.canvasWidth	= canvas.width;
 	this.canvasHeight	= canvas.height;
 }
@@ -42,7 +43,7 @@ Ball.prototype.ResetForce = function () {
 }
 
 Ball.prototype.AddForce = function (argForce) {
-	this.force = this.force.Add(argForce);
+	this.force.Add(argForce);
 }
 
 Ball.prototype.Draw = function (ctx, scale) {
@@ -50,4 +51,19 @@ Ball.prototype.Draw = function (ctx, scale) {
 	ctx.beginPath();
 	ctx.arc(Math.round(this.position.x*scale), this.canvasHeight - Math.round(this.position.y*scale), this.radius*scale, 0, 2*Math.PI);
 	ctx.fill();
+}
+
+Ball.prototype.PreVerlet = function (delta) { 	
+// Executes position update and velocity half-update
+// To be called before force update
+	this.velocity.Add(Vec2.Mult(this.force,delta*this.imass/2));
+	this.position.Add(Vec2.Mult(this.velocity,delta));
+}
+
+Ball.prototype.PostVerlet = function (delta) {	
+// Executes velocity velocity second-half-update
+// To be called after force update
+	this.velocity.Add(Vec2.Mult(this.force,delta*this.imass/2));
+
+	this.position.Display();
 }
