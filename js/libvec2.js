@@ -57,7 +57,7 @@ Vec2.prototype.Normal = function () {
 
 Vec2.prototype.Project = function (argVec) {
 	var magnitude = Vec2.Dot(this,argVec) / argVec.Magnitude();
-	var projection = argVec.Normalized().Mult(magnitude);
+	var projection = Vec2.Mult(argVec.Normalized(), magnitude);
 	return projection;
 };
 

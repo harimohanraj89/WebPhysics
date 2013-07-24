@@ -30,16 +30,18 @@ function Ball (argRadius, argPosition, argDensity, canvas) {
 // 		Object Methods
 // ------------------------
 
-Ball.prototype.SetPos = function (argPos) {
-	this.position.Set(argPos);
+Ball.prototype.SetPos = function (argX, argY) {
+	this.position.x = argX;
+	this.position.y = argY;
 }
 
-Ball.prototype.SetVel = function (argVel) {
-	this.velocity.Set(argVel);
+Ball.prototype.SetVel = function (argX, argY) {
+	this.velocity.x = argX;
+	this.velocity.y = argY;
 }
 
 Ball.prototype.ResetVel = function (argVel) {
-	this.velocity.Set(new Vec(0,0));
+	this.velocity.Mult(0);
 }
 
 Ball.prototype.ResetForce = function () {
