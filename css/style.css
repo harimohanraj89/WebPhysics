@@ -38,6 +38,7 @@ body {
   border-bottom: 1px solid #ccc;
 }
 #site p {
+  width: 100%;
   padding: 0;
   padding-top: 24px;
   padding-bottom: 24px;
@@ -48,16 +49,17 @@ body {
   color: #444444;
 }
 #site div#physicswrapper div#buttonwrapper {
-  width: 96px;
+  width: 600px;
   margin-left: auto;
   margin-right: auto;
 }
 #site div#physicswrapper div#buttonwrapper .button1 {
+  float: left;
   padding-left: 24px;
   padding-right: 24px;
   padding-top: 12px;
   padding-bottom: 12px;
-  background-color: #88aadd;
+  background-color: #7799ff;
   border: none;
   box-shadow: none;
   border-radius: 5px;
@@ -65,7 +67,7 @@ body {
   font-size: 14px;
 }
 #site div#physicswrapper div#buttonwrapper .button1:active {
-  background-color: #6688bb;
+  background-color: #5577ff;
 }
 #site div#physicswrapper div#canvaswrapper {
   clear: both;

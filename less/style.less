@@ -6,9 +6,11 @@
 @background-side:#333;
 @heading-color:#68b;
 @font-main:#444;
+@canvas-width:600px;
 @canvas-background:#eee;
 @canvas-border:#222;
-@button-color:@heading-color+#222;
+@button-color:@heading-color + #11e;
+// @button-color:@heading-color;
 
 html {
 	height:100%;
@@ -58,6 +60,7 @@ body {
 	}
 
 	p {
+		width:100%;
 		padding:0;
 		padding-top:24px;
 		padding-bottom:24px;
@@ -72,10 +75,11 @@ body {
 	div#physicswrapper {
 
 		div#buttonwrapper {
-			width:96px;
+			width:@canvas-width;
 			margin-left:auto;
 			margin-right:auto;
 			.button1 {
+				float:left;
 				padding-left:24px;
 				padding-right:24px;
 				padding-top:12px;
@@ -90,14 +94,14 @@ body {
 				font-size:14px;
 
 				&:active {
-					background-color:@button-color - #222;
+					background-color: @button-color - #222;
 				}
 			}
 		}
 
 		div#canvaswrapper {
 			clear:both;
-			width:600px;
+			width:@canvas-width;
 			margin-left:auto;
 			margin-right:auto;
 			#mainCanvas {

@@ -38,6 +38,10 @@ Ball.prototype.SetVel = function (argVel) {
 	this.velocity.Set(argVel);
 }
 
+Ball.prototype.ResetVel = function (argVel) {
+	this.velocity.Set(new Vec(0,0));
+}
+
 Ball.prototype.ResetForce = function () {
 	this.force.Mult(0);
 }
@@ -64,6 +68,4 @@ Ball.prototype.PostVerlet = function (delta) {
 // Executes velocity velocity second-half-update
 // To be called after force update
 	this.velocity.Add(Vec2.Mult(this.force,delta*this.imass/2));
-
-	this.position.Display();
 }
