@@ -7,9 +7,10 @@ var CWIDTH    	= 1200;
 var SCALE		= 100;
 var PHEIGHT		= CHEIGHT / SCALE;
 var PWIDTH		= CWIDTH  / SCALE;
-var RESTITUTION	= 0.95;
+var RESTITUTION	= 0.4;
 var DRESTITUTION= 0.1;
-var GRAVITY		= new Vec2(0,-100);
+var SLOP 		= 0.005;
+var GRAVITY		= new Vec2(0,-50);
 var DELTA		= 0.01;
 var FRAMERATE 	= 10 // milliseconds
 var c;
@@ -18,7 +19,7 @@ var tickHandle	= false;
 
 var ballstartsx = new Array();
 var ballstartsy = new Array();
-var balls = new Array();
+var balls 		= new Array();
 
 // Collision variables
 var ball1;
@@ -30,6 +31,9 @@ var vel1nn;
 var vel2nn;
 var vel1t;
 var vel2t;
+
+// Input variables
+var mouse = {mouseX:0, mouseY:0, mouseDown:false};
 
 window.onload = function () {
 
@@ -44,6 +48,8 @@ window.onload = function () {
 	c.width = CWIDTH;
 	c.height = CHEIGHT;
 	ctx = c.getContext("2d");
+	c.addEventListener("mousedown", BallsMouseDown, false);
+	c.addEventListener("mouseup", BallsMouseUp, false);
 
 	for (var i=0, len=ballstartsx.length; i<len; i++)
 	{
@@ -123,6 +129,9 @@ UpdateForces = function () {
 	{
 		balls[i].ResetForce();
 		balls[i].AddForce(Vec2.Mult(GRAVITY, 1/balls[i].imass));
+		if (mouse.mouseDown) {
+			console.log("Hooray!");
+		}
 	}
 }
 
@@ -175,29 +184,58 @@ CheckWalls = function () {
 		// Bottom wall
 		if (balls[i].position.y - balls[i].radius < 0 && balls[i].velocity.y < 0)
 		{
-			balls[i].position.y = balls[i].radius + DRESTITUTION * (balls[i].position.y - balls[i].radius);
+			if (1 - balls[i].position.y/balls[i].radius > SLOP) {
+				balls[i].position.y = balls[i].radius + DRESTITUTION * (balls[i].position.y - balls[i].radius);	
+			}
 			balls[i].velocity.y = (-1) * RESTITUTION * balls[i].velocity.y;
 		}
 
 		// Top wall
 		if (balls[i].position.y + balls[i].radius > PHEIGHT && balls[i].velocity.y > 0)
 		{
-			balls[i].position.y = (PHEIGHT - balls[i].radius) - DRESTITUTION * (PHEIGHT - balls[i].position.y - balls[i].radius);
+			if ((balls[i].position.y - PHEIGHT)/balls[i].radius + 1 > SLOP) {
+				balls[i].position.y = (PHEIGHT - balls[i].radius) - DRESTITUTION * (PHEIGHT - balls[i].position.y - balls[i].radius);
+			}
 			balls[i].velocity.y = (-1) * RESTITUTION * balls[i].velocity.y;
 		}
 
 		// Left wall
 		if (balls[i].position.x < balls[i].radius && balls[i].velocity.x < 0)
 		{
-			balls[i].position.x = balls[i].radius + DRESTITUTION * (balls[i].position.x - balls[i].radius);
+			if (1 - balls[i].position.x/balls[i].radius > SLOP) {
+				balls[i].position.x = balls[i].radius + DRESTITUTION * (balls[i].position.x - balls[i].radius);
+			}
 			balls[i].velocity.x = (-1) * RESTITUTION * balls[i].velocity.x;
 		}
 
 		// Right wall
 		if (balls[i].position.x + balls[i].radius > PWIDTH && balls[i].velocity.x > 0)
 		{
-			balls[i].position.x = (PWIDTH - balls[i].radius) - DRESTITUTION * (PWIDTH - balls[i].position.x - balls[i].radius);
+			if ((balls[i].position.x-PWIDTH)/balls[i].radius + 1 > SLOP) {
+				balls[i].position.x = (PWIDTH - balls[i].radius) - DRESTITUTION * (PWIDTH - balls[i].position.x - balls[i].radius);
+			}
 			balls[i].velocity.x = (-1) * RESTITUTION * balls[i].velocity.x;
 		}
 	}
+}
+
+// ------------------
+// 		 MOUSE
+// ------------------
+
+function BallsMouseDown(event){
+    UpdateMousePos(event);
+    mouse.mouseDown = true;
+    c.addEventListener("mousemove", UpdateMousePos, false);
+}
+
+function BallsMouseUp(event){
+	mouse.mouseDown = false;
+	c.removeEventListener("mousemove", UpdateMousePos, false);
+}
+
+function UpdateMousePos(event) {
+    var clientRect = c.getBoundingClientRect();
+    mouse.mouseX = event.clientX - clientRect.left;
+    mouse.mouseY = event.clientY - clientRect.top;
 }
