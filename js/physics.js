@@ -4,13 +4,14 @@
 
 var CHEIGHT   	= 800;
 var CWIDTH    	= 1200; 
-var SCALE		= 100;
-var PHEIGHT		= CHEIGHT / SCALE;
-var PWIDTH		= CWIDTH  / SCALE;
+var CSCALE		= 100;
+var ASCALE 		= 50;
+var PHEIGHT		= CHEIGHT / CSCALE;
+var PWIDTH		= CWIDTH  / CSCALE;
 var RESTITUTION	= 0.4;
 var DRESTITUTION= 0.1;
 var SLOP 		= 0.005;
-var GRAVITY		= new Vec2(0,-50);
+var GRAVITY		= new Vec2(0,0);
 var DELTA		= 0.01;
 var FRAMERATE 	= 10 // milliseconds
 var c;
@@ -33,17 +34,24 @@ var vel1t;
 var vel2t;
 
 // Input variables
-var mouse = {mouseX:0, mouseY:0, mouseDown:false};
+var mouse = {
+				mousePos:new Vec2(0,0), 
+				mouseDown:false, 
+				mouseMin:1, 
+				mouseMax:3,
+				mouseK:50
+			};
+mouse.mouseMinSq = mouse.mouseMin * mouse.mouseMin;
+mouse.mouseMaxSq = mouse.mouseMax * mouse.mouseMax;
 
 window.onload = function () {
 
 	// Initial Conditions
 	// ------------------
-	ballstartsx = [2,9, 7];
+	ballstartsx = [2, 9, 7];
 	ballstartsy = [3, 5, 6];
 	ballstartsr = [1, 0.5, 0.25];
 	// ------------------
-	console.log(ballstartsx);
 	c = document.getElementById("mainCanvas");
 	c.width = CWIDTH;
 	c.height = CHEIGHT;
@@ -60,8 +68,6 @@ window.onload = function () {
 	UpdateForces();
 
 	DrawBalls();
-
-	console.log(balls);
 }
 
 
@@ -80,7 +86,7 @@ StopSimulation = function () {
 }
 
 ResetBalls = function () {
-
+	ClearCanvas();
 	StopSimulation();
 
 	for (var i=0, len=balls.length; i<len; i++)
@@ -97,11 +103,15 @@ ResetBalls = function () {
 }
 
 DrawBalls = function () {
-	ctx.clearRect(0,0,c.width,c.height);
+	
 	for (var i=0,len=balls.length; i<len; i++)
 	{
-		balls[i].Draw(ctx,SCALE);
+		balls[i].Draw(ctx,CSCALE);
 	}
+}
+
+ClearCanvas = function () {
+	ctx.clearRect(0,0,c.width,c.height);
 }
 
 // ------------------------
@@ -109,6 +119,7 @@ DrawBalls = function () {
 // ------------------------
 
 UpdateBalls = function () {
+	ClearCanvas();
 	for (var i=0,len=balls.length; i<len; i++)
 	{
 		balls[i].PreVerlet(DELTA);
@@ -130,11 +141,37 @@ UpdateForces = function () {
 		balls[i].ResetForce();
 		balls[i].AddForce(Vec2.Mult(GRAVITY, 1/balls[i].imass));
 		if (mouse.mouseDown) {
-			console.log("Hooray!");
+			AddMouseForce(i);
 		}
 	}
 }
 
+AddMouseForce = function (i) {
+	var r = Vec2.Sub(balls[i].position, mouse.mousePos);
+	var rSq = r.SqrMagnitude();
+	if (rSq == 0) {
+		return;
+	}
+
+	rSq = Math.max(rSq,mouse.mouseMinSq);
+	if (rSq < mouse.mouseMaxSq && rSq > mouse.mouseMinSq) {
+		var force = r.Normalized();
+		force.Mult(- mouse.mouseK / (balls[i].imass * rSq));
+		balls[i].AddForce(force);
+	}
+
+	// Draw debugging lines
+	ctx.strokeStyle = "#F00";
+	ctx.beginPath();
+	ctx.arc(mouse.mousePos.x * CSCALE, CHEIGHT - mouse.mousePos.y * CSCALE, mouse.mouseMin*CSCALE, 0, 2*Math.PI);
+	ctx.stroke();
+	ctx.beginPath();
+	ctx.arc(mouse.mousePos.x * CSCALE, CHEIGHT - mouse.mousePos.y * CSCALE, mouse.mouseMax*CSCALE, 0, 2*Math.PI);
+
+	ctx.moveTo(mouse.mousePos.x * CSCALE, CHEIGHT - mouse.mousePos.y * CSCALE);
+	ctx.lineTo(balls[i].position.x * CSCALE, CHEIGHT - balls[i].position.y * CSCALE);
+	ctx.stroke();
+}
 // ------------------------
 // 		 COLLISIONS
 // ------------------------
@@ -236,6 +273,6 @@ function BallsMouseUp(event){
 
 function UpdateMousePos(event) {
     var clientRect = c.getBoundingClientRect();
-    mouse.mouseX = event.clientX - clientRect.left;
-    mouse.mouseY = event.clientY - clientRect.top;
+    mouse.mousePos.x = (event.clientX - clientRect.left) / ASCALE;
+    mouse.mousePos.y = (400 - (event.clientY - clientRect.top)) / ASCALE; // TODO: This shouldn't be hardcoded.
 }
