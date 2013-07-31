@@ -2,6 +2,15 @@
  * @author Hariharan Mohanraj
  */
 
+// ========================================
+// 
+//	 	VERLET IMPLEMENTATIONS OF BALLS
+// 		IN A BOX
+//		
+//		(c) 2013, HARIHARAN MOHANRAJ
+// 
+// ========================================
+
 var CHEIGHT   	= 800;
 var CWIDTH    	= 1200; 
 var CSCALE		= 100;
