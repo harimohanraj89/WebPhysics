@@ -10,6 +10,7 @@
 @canvas-background:#e5e5e5;
 @canvas-border:#68b;
 @button-color:@heading-color + #11e;
+@paramBorderColor:@canvas-border;
 // @button-color:@heading-color;
 
 html {
@@ -72,38 +73,41 @@ body {
 		color:@font-main;
 	}
 
+	.button1 {
+		float:left;
+		padding-left:24px;
+		padding-right:24px;
+		padding-top:12px;
+		padding-bottom:12px;
+		background-color:@button-color;
+
+		border:none;
+		box-shadow:none;
+		border-radius:5px;
+
+		color:#fff;
+		font-size:14px;
+
+		&:active {
+			background-color: @button-color - #222;
+		}
+	}
+
+	div.narrow {
+		clear:both;
+		width:@canvas-width;
+		margin-left:auto;
+		margin-right:auto;
+	}
+
 	div#physicswrapper {
 
-		div#buttonwrapper {
-			width:@canvas-width;
-			margin-left:auto;
-			margin-right:auto;
-			.button1 {
-				float:left;
-				padding-left:24px;
-				padding-right:24px;
-				padding-top:12px;
-				padding-bottom:12px;
-				background-color:@button-color;
+		div#controlbuttonwrapper {
 
-				border:none;
-				box-shadow:none;
-				border-radius:5px;
-
-				color:#fff;
-				font-size:14px;
-
-				&:active {
-					background-color: @button-color - #222;
-				}
-			}
 		}
 
 		div#canvaswrapper {
-			clear:both;
-			width:@canvas-width;
-			margin-left:auto;
-			margin-right:auto;
+
 			#mainCanvas {
 				width:600px;
 				height:400px;
@@ -111,6 +115,66 @@ body {
 				border:2px solid @canvas-border;
 			}
 		}
+
+		div#parameterswrapper {
+
+			height:0px;
+			width:@canvas-width - 30px;
+			padding-left:15px;
+			padding-right:15px;
+			overflow:hidden;
+
+			background-color:#f3f3f3;
+
+			box-shadow:0 0 10px rgba(0,0,0,0.5) inset;
+
+			border-bottom-left-radius:10px;
+			border-bottom-right-radius:10px;
+
+			border-left:2px solid @paramBorderColor;;
+			border-right:2px solid @paramBorderColor;
+
+			transition: height 0.3s ease-out;
+			-webkit-transition: height 0.3s ease-out;
+
+			div.parameter {
+				height:150px;
+				margin-top:10px;
+				float:left;
+
+				margin-right:35px;
+
+				div.parameterheading {
+					font-family:"Oxygen", sans-serif;
+					color:@heading-color;
+				}
+
+				div.parametercontent {
+					form {
+						font-family:"Mako", sans-serif;
+						color:#333;
+					}
+
+					input.numinput {
+						width:50px;
+						height:30px;
+						text-align:center;
+						color:#333;
+						font-family:"Mako", sans-serif;
+						font-size:14px;
+					}
+				}
+			}
+
+			div#updateparameterswrapper {
+				margin-right:0;
+				float:right;
+			}
+		}
 	}
 }
+
+
+
+
 
