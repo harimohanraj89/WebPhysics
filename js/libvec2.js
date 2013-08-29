@@ -1,6 +1,3 @@
-/**
- * @author Hariharan Mohanraj
- */
 // ========================================
 // 
 //	 	2-D VECTOR JAVASCRIPT LIBRARY

@@ -1,6 +1,3 @@
-/**
- * @author Hariharan Mohanraj
- */
 // ========================================
 // 
 //	  PHYSICS BALL JAVASCRIPT LIBRARY

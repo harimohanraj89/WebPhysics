@@ -24,23 +24,89 @@ body {
 }
 
 #site {
+	position:relative;
 	width : 80%;
 	max-width: 760px;
 	min-height:100%;
 
 	margin-top:0;
 	margin-bottom:0;
+	// float:right;
 	margin-left : auto;
 	margin-right: auto;
-	padding-top:  10px;
+	padding-top:  0;
+	padding-bottom:0;
 	padding-left: 100px;
 	padding-right:100px;
-	padding-bottom:48px;
 
 	//border-right:1px solid @background-main - #333;
 	//border-left:1px solid @background-main - #333;
 	box-shadow : 0px 0px 15px @background-side - #222;
 	background-color: @background-main;
+
+	div#menu {
+		padding:0;
+		margin:0;
+
+		position:absolute;
+		top:0;
+		left:0;
+		h2 {
+			margin:0;
+			padding-left:24px;
+			padding-top:0;
+
+			font-family:"Oxygen",sans-serif;
+			font-weight:300;
+			font-size : 36px;
+			color:@heading-color;
+		}
+
+		ul#menulist {
+			position:absolute;
+			// top:36px;
+			// left:24px;
+			top:0;
+			left:0;
+			
+			margin:0;
+			padding:0;
+			
+			list-style-type:none;
+			background:#eaeaea;
+
+			box-shadow:1px 1px 1px #ccc;
+
+			li {
+				padding-top:12px;
+				padding-bottom:12px;
+				padding-left:24px;
+				text-align:left;
+				width:120px;
+
+				font-family:"Oxygen",sans-serif;
+				font-weight:300;
+				font-size:24px;
+				color:@heading-color;
+				border-bottom:1px solid #d5d5d5;
+
+				transition:color 0.3s, background 0.3s;
+				-webkit-transition:color 0.3s, background 0.3s;
+
+				&:hover {
+					color:@heading-color + #112;
+					background:#f5f5f5;
+				}
+			}
+
+			a {
+				text-decoration:none;
+				color:@heading-color;	
+			}
+
+			
+		}
+	}
 
 	h1 {
 		width:100%;
@@ -102,6 +168,7 @@ body {
 
 	div#physicswrapper {
 
+		margin-bottom:96px;
 		div#controlbuttonwrapper {
 
 		}
@@ -170,6 +237,26 @@ body {
 				margin-right:0;
 				float:right;
 			}
+		}
+	}
+
+	div#footer {
+		clear:both;
+		width:100%;
+		padding-bottom:12px;
+		border-top:1px solid #ccc;
+
+		p {
+			padding:0;
+			margin:0;
+			margin-top:12px;
+			
+			width:100%;
+
+			text-align:center;
+			font-family:"Oxygen", sans-serif;	
+			font-size:14px;
+			color:#a5a5a5;
 		}
 	}
 }

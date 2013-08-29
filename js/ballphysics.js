@@ -1,7 +1,3 @@
-/**
- * @author Hariharan Mohanraj
- */
-
 // ========================================
 // 
 //	 	VERLET IMPLEMENTATIONS OF BALLS
@@ -17,7 +13,7 @@ var CSCALE		= 100;
 var ASCALE 		= 50;
 var PHEIGHT		= CHEIGHT / CSCALE;
 var PWIDTH		= CWIDTH  / CSCALE;
-var RESTITUTION	= 0.4;
+var RESTITUTION	= 0.7;
 var DRESTITUTION= 0.1;
 var SLOP 		= 0.005;
 var GRAVITY		= new Vec2(0,0);
@@ -57,9 +53,9 @@ window.onload = function () {
 
 	// Initial Conditions
 	// ------------------
-	ballstartsx = [2, 9, 7];
-	ballstartsy = [3, 5, 6];
-	ballstartsr = [1, 0.5, 0.25];
+	ballstartsx = [2, 9, 7, 2, 9, 7];
+	ballstartsy = [3, 5, 6, 5, 2, 2];
+	ballstartsr = [1, 0.5, 0.25, 0.3, 0.4, 0.35];
 	// ------------------
 	c = document.getElementById("mainCanvas");
 	c.width = CWIDTH;
@@ -170,16 +166,14 @@ AddMouseForce = function (i) {
 	}
 
 	// Draw debugging lines
-	ctx.strokeStyle = "#F00";
-	ctx.beginPath();
-	ctx.arc(mouse.mousePos.x * CSCALE, CHEIGHT - mouse.mousePos.y * CSCALE, mouse.mouseMin*CSCALE, 0, 2*Math.PI);
-	ctx.stroke();
+	ctx.strokeStyle = "#68b";
+	ctx.fillStyle = "#68b";
 	ctx.beginPath();
 	ctx.arc(mouse.mousePos.x * CSCALE, CHEIGHT - mouse.mousePos.y * CSCALE, mouse.mouseMax*CSCALE, 0, 2*Math.PI);
-
-	ctx.moveTo(mouse.mousePos.x * CSCALE, CHEIGHT - mouse.mousePos.y * CSCALE);
-	ctx.lineTo(balls[i].position.x * CSCALE, CHEIGHT - balls[i].position.y * CSCALE);
 	ctx.stroke();
+	ctx.beginPath();
+	ctx.arc(mouse.mousePos.x * CSCALE, CHEIGHT - mouse.mousePos.y * CSCALE, 0.5*CSCALE, 0, 2*Math.PI);
+	ctx.fill();
 }
 // ------------------------
 // 		 COLLISIONS
@@ -283,5 +277,5 @@ function BallsMouseUp(event){
 function UpdateMousePos(event) {
     var clientRect = c.getBoundingClientRect();
     mouse.mousePos.x = (event.clientX - clientRect.left) / ASCALE;
-    mouse.mousePos.y = (400 - (event.clientY - clientRect.top)) / ASCALE; // TODO: This shouldn't be hardcoded.
+    mouse.mousePos.y = (400 - (event.clientY - clientRect.top)) / ASCALE; // TODO: This 400 shouldn't be hardcoded.
 }

@@ -10,6 +10,7 @@ body {
   height: 100%;
 }
 #site {
+  position: relative;
   width: 80%;
   max-width: 760px;
   min-height: 100%;
@@ -17,12 +18,60 @@ body {
   margin-bottom: 0;
   margin-left: auto;
   margin-right: auto;
-  padding-top: 10px;
+  padding-top: 0;
+  padding-bottom: 0;
   padding-left: 100px;
   padding-right: 100px;
-  padding-bottom: 48px;
   box-shadow: 0px 0px 15px #111111;
   background-color: #ffffff;
+}
+#site div#menu {
+  padding: 0;
+  margin: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+#site div#menu h2 {
+  margin: 0;
+  padding-left: 24px;
+  padding-top: 0;
+  font-family: "Oxygen", sans-serif;
+  font-weight: 300;
+  font-size: 36px;
+  color: #6688bb;
+}
+#site div#menu ul#menulist {
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+  background: #eaeaea;
+  box-shadow: 1px 1px 1px #ccc;
+}
+#site div#menu ul#menulist li {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  padding-left: 24px;
+  text-align: left;
+  width: 120px;
+  font-family: "Oxygen", sans-serif;
+  font-weight: 300;
+  font-size: 24px;
+  color: #6688bb;
+  border-bottom: 1px solid #d5d5d5;
+  transition: color 0.3s, background 0.3s;
+  -webkit-transition: color 0.3s, background 0.3s;
+}
+#site div#menu ul#menulist li:hover {
+  color: #7799dd;
+  background: #f5f5f5;
+}
+#site div#menu ul#menulist a {
+  text-decoration: none;
+  color: #6688bb;
 }
 #site h1 {
   width: 100%;
@@ -70,6 +119,9 @@ body {
   margin-left: auto;
   margin-right: auto;
 }
+#site div#physicswrapper {
+  margin-bottom: 96px;
+}
 #site div#physicswrapper div#canvaswrapper #mainCanvas {
   width: 600px;
   height: 400px;
@@ -116,4 +168,20 @@ body {
 #site div#physicswrapper div#parameterswrapper div#updateparameterswrapper {
   margin-right: 0;
   float: right;
+}
+#site div#footer {
+  clear: both;
+  width: 100%;
+  padding-bottom: 12px;
+  border-top: 1px solid #ccc;
+}
+#site div#footer p {
+  padding: 0;
+  margin: 0;
+  margin-top: 12px;
+  width: 100%;
+  text-align: center;
+  font-family: "Oxygen", sans-serif;
+  font-size: 14px;
+  color: #a5a5a5;
 }

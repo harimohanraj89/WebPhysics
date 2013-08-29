@@ -1,7 +1,3 @@
-/**
- * @author Hariharan Mohanraj
- */
-
 // ========================================
 // 
 //	 	SIMULATION OF VIBRATING STRING
@@ -16,14 +12,15 @@
 
 // Physical Parameters
 var stringLen       = 1;     	// meters
-var tension         = 75;    	// newtons
+var tension         = 7500;    	// newtons
 var linDensity      = 0.2;   	// kg/meter
 var amplitude       = 0.0001;
+var dampingCoeff	= 0.01;
 
 // Computational Parameters
-var numSegs         = 256;
+var numSegs         = 1024;
 var delta           = 0.00001;	// seconds
-var stepsPerFrame   = 4;
+var stepsPerFrame   = 1;
 var spfCount		= 0;
 var totalTime       = 5;		// seconds
 
@@ -37,7 +34,9 @@ var y 		= new Array(numSegs);
 var prevy 	= new Array(numSegs);
 var nexty 	= new Array(numSegs);
 var accel 	= new Array(numSegs);
-var dxdy2	= new Array(numSegs);
+var dxdy1	= new Array(numSegs);
+var velocity;
+
 
 // User variables
 var initType	= "pluck";
@@ -207,11 +206,16 @@ UpdateString = function () {
 
 	// Implement solution to 1-D wave equation, standard verlet
 	// ------------------
+	
 	dxdy2 = CustomDiff(CustomDiff(y,x),x);
+
 	for (var i=0; i<numSegs; i++) {
 
+		// Velocity
+		velocity = (y[i] - prevy[i])/delta;
+
 		// Accel
-		accel[i] = dxdy2[i] * tension / (linDensity*segmentLen);
+		accel[i] = (dxdy2[i] * tension - dampingCoeff*velocity/segmentLen) / (linDensity) ;
 
 		// Next y
 		if (i == 0 || i == numSegs-1) {
