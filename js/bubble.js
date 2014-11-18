@@ -1,9 +1,9 @@
 // ========================================
-// 
+//
 //	  PHYSICS BUBBLE JAVASCRIPT LIBRARY
-//		
+//
 //		(c)2013, HARIHARAN MOHANRAJ
-// 
+//
 // 	*****   Requires Vec2 Library   *****
 
 // ========================================
@@ -47,7 +47,7 @@ Bubble.prototype.DrawBubble = function (ctx, scale) {
 		ctx.fillStyle="#444";
 		ctx.beginPath();
 		ctx.arc(Math.round(this.position.x*scale), this.canvasHeight - Math.round(this.position.y*scale), this.radius*scale, 0, 2*Math.PI);
-		ctx.fill();	
+		ctx.fill();
 	}
 }
 
@@ -56,12 +56,12 @@ Bubble.prototype.DrawBubble = function (ctx, scale) {
 // }
 
 Bubble.prototype.Update = function (delta) {
-	
+
 	// Bubble shrink
 	if (this.position.y >= 0) {
-		this.radius -= this.shrinkRate * delta;	
+		this.radius -= this.shrinkRate * delta;
 	}
-	
+
 	// Bubble float
 	// this.velocity.Set(new Vec2(0, this.buoyancy/(0.5+this.radius)))
 	this.SetVel(0, this.buoyancy);
@@ -79,8 +79,14 @@ Bubble.prototype.Kill = function (ctx, scale) {
 	ctx.fillStyle="#444";
 	ctx.beginPath();
 	ctx.arc(Math.round( (this.position.x + 0.1)*scale), this.canvasHeight - Math.round((this.position.y + 0.1)*scale), 0.03*scale, 0, 2*Math.PI);
+	ctx.fill();
+	ctx.beginPath();
 	ctx.arc(Math.round( (this.position.x + 0.1)*scale), this.canvasHeight - Math.round((this.position.y - 0.1)*scale), 0.03*scale, 0, 2*Math.PI);
+	ctx.fill();
+	ctx.beginPath();
 	ctx.arc(Math.round( (this.position.x - 0.1)*scale), this.canvasHeight - Math.round((this.position.y + 0.1)*scale), 0.03*scale, 0, 2*Math.PI);
+	ctx.fill();
+	ctx.beginPath();
 	ctx.arc(Math.round( (this.position.x - 0.1)*scale), this.canvasHeight - Math.round((this.position.y - 0.1)*scale), 0.03*scale, 0, 2*Math.PI);
 	ctx.fill();
 }
