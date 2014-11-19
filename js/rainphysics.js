@@ -15,14 +15,14 @@ var PWIDTH		= CWIDTH  / CSCALE;
 
 var DIRECTION = Math.PI / 8;
 var PADDING = 0.2;
-var GRAVITY		= 1;
+var GRAVITY		= 10;
 var DELTA		= 0.01;
 var FRAMERATE 	= 10 // milliseconds
 var c;
 var ctx;
 var simulating	= false;
 var t;
-var spawnTime = 100;
+var spawnTime = 40;
 var lastSpawned;
 var rains = [];
 
@@ -43,8 +43,8 @@ MakeItRain = function () {
 SpawnDrop = function () {
   var pos = new Vec2(Math.random() * PWIDTH * (1 + PADDING) - (PWIDTH * PADDING) , PHEIGHT * (1 + PADDING));
   var g = new Vec2(Math.sin(DIRECTION), -1 * Math.cos(DIRECTION));
-  g.Mult(GRAVITY * 0.0016);
-  var rain = new Raindrop(0.04, pos, new Vec2(0, 0), g, 1, c);
+  g.Mult(GRAVITY * 0.0025);
+  var rain = new Raindrop(0.05, pos, new Vec2(0, 0), g, 1, c);
   rains.push(rain);
 }
 

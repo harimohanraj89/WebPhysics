@@ -1,9 +1,9 @@
 // ========================================
-// 
+//
 //	 	2-D VECTOR JAVASCRIPT LIBRARY
-//		
+//
 //		(c) 2013, HARIHARAN MOHANRAJ
-// 
+//
 // ========================================
 
 // ------------------------
@@ -61,16 +61,19 @@ Vec2.prototype.Project = function (argVec) {
 Vec2.prototype.Add = function (argVec) {
 	this.x += argVec.x;
 	this.y += argVec.y;
+	return this;
 }
 
 Vec2.prototype.Sub = function (argVec) {
 	this.x -= argVec.x;
 	this.y -= argVec.y;
+	return this;
 }
 
 Vec2.prototype.Mult = function (argScalar) {
 	this.x *= argScalar;
 	this.y *= argScalar;
+	return this;
 }
 
 // ------------------------
@@ -108,5 +111,3 @@ Vec2.X = function () {
 Vec2.Y = function () {
 	return (new Vec2(0,1));
 }
-
-
