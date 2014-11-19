@@ -25,6 +25,8 @@ var t;
 var spawnTime = 40;
 var lastSpawned;
 var rains = [];
+var splashes = [];
+var dropRadius = 0.05;
 
 window.onload = function () {
   c = document.getElementById("mainCanvas");
@@ -43,9 +45,23 @@ MakeItRain = function () {
 SpawnDrop = function () {
   var pos = new Vec2(Math.random() * PWIDTH * (1 + PADDING) - (PWIDTH * PADDING) , PHEIGHT * (1 + PADDING));
   var g = new Vec2(Math.sin(DIRECTION), -1 * Math.cos(DIRECTION));
-  g.Mult(GRAVITY * 0.0025);
-  var rain = new Raindrop(0.05, pos, new Vec2(0, 0), g, 1, c);
+  g.Mult(GRAVITY * dropRadius * dropRadius);
+  var rain = new Raindrop(dropRadius, pos, new Vec2(0, 0), g, 1, c);
   rains.push(rain);
+}
+
+SpawnSplashes = function(position, speed) {
+
+  for(var i = 0; i < 3; i++) {
+    var pos = new Vec2(position.x , dropRadius);
+    var g = new Vec2(0, -1);
+    g.Mult(GRAVITY * dropRadius * dropRadius);
+    var dir = Math.random() * Math.PI/2 + Math.PI/4;
+    var vel = new Vec2(Math.cos(dir) * (Math.random()*0.4 + 0.8), Math.sin(dir) * (Math.random()*0.4 + 0.8));
+    vel.Mult(speed / 5);
+    var splash = new Splash(dropRadius, pos, vel, g, 1, c);
+    splashes.push(splash);
+  }
 }
 
 // ------------------------
@@ -62,6 +78,12 @@ StopSimulation = function () {
 DrawRains = function () {
   rains.forEach(function(rain) {
     rain.Draw(ctx,CSCALE);
+  });
+}
+
+DrawSplashes = function () {
+  splashes.forEach(function(splash) {
+    splash.Draw(ctx,CSCALE);
   });
 }
 
@@ -90,21 +112,36 @@ UpdateRain = function (time) {
       lastSpawned = time;
     }
 
-    // Cleaning up dead rain drops
-    var cleanup = [];
+    var cleanupDrops = [];
+    var cleanupSplashes = [];
+
+    // Updating
     rains.forEach(function(rain, idx) {
       rain.Verlet(delta/1000);
       if (rain.position.y < 0) {
-        cleanup.unshift(idx); // Push in reverse order so splice can work
+        cleanupDrops.unshift(idx); // Push in reverse order so splice can work
       }
     });
-    cleanup.forEach(function(rainIdx) {
+    splashes.forEach(function(splash, idx) {
+      splash.Verlet(delta/1000);
+      if (splash.position.y < -0.5) {
+        cleanupSplashes.unshift(idx); // Push in reverse order so splice can work
+      }
+    });
+
+    // Cleaning up dead rain drops
+    cleanupDrops.forEach(function(rainIdx) {
+      SpawnSplashes(rains[rainIdx].position, rains[rainIdx].velocity.Magnitude());
       rains.splice(rainIdx, 1);
+    });
+    cleanupSplashes.forEach(function(splashIdx) {
+      splashes.splice(splashIdx, 1);
     });
 
     // Drawing
     ClearCanvas();
     DrawRains();
+    DrawSplashes();
   }
 
   requestAnimationFrame(UpdateRain);
