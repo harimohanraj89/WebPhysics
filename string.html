@@ -22,12 +22,13 @@
                     <a href="./balls.html"><li>Balls</li></a>
                     <a href="./string.html"><li>String</li></a>
                     <a href="./bubbles.html"><li>Bubbles</li></a>
+                    <a href="./rain.html"><li>Rain</li></a>
                 </ul>
             </div>
 	        <h1>
 	        	Physical Space
 	        </h1>
-	        
+
 	        <p>
 	        	A physics simulation of a vibrating string, solving the 1-dimensional wave equation.
 	        </p>
@@ -39,7 +40,7 @@
                     <button class="button1" id="stopbutton" onclick="StopSimulation();">Stop</button>
                     <button class="button1" id="resetbutton" onclick="ResetString();">Reset</button>
                 </div>
-                    
+
                 <div id="canvaswrapper" class="narrow">
                     <canvas id="mainCanvas"></canvas>
                 </div>
@@ -61,10 +62,10 @@
                     </div>
 
                     <div class="parameter" id="harmonicwrapper">
-                        
+
                         <div class="parameterheading">
                             Harmonic
-                        </div>    
+                        </div>
 
                         <div class="parametercontent">
                             <input class="numinput" id="harmonictext" type="text">
@@ -73,23 +74,23 @@
                     </div>
 
                     <div class="parameter" id="fractionwrapper">
-                        
+
                         <div class="parameterheading">
                             Pluck Fraction
-                        </div>    
-                        
+                        </div>
+
                         <div class="parametercontent">
                             <input class="numinput" id="fractiontext" type="text">
                         </div>
 
                     </div>
-                    
+
                     <!-- <div class="parameter" id="wavetypewrapper">
                         <input type="text"
                     </div>     -->
-                    
+
                     <div class="parameter" id="updateparameterswrapper">
-                        <button class="button1" id="updateparameters" onclick="UpdateParameters();">Update Parameters</button>                    
+                        <button class="button1" id="updateparameters" onclick="UpdateParameters();">Update Parameters</button>
                     </div>
                 </div>
 
