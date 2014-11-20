@@ -13,16 +13,19 @@ var CSCALE		= 100;
 var PHEIGHT		= CHEIGHT / CSCALE;
 var PWIDTH		= CWIDTH  / CSCALE;
 
-var DIRECTION = Math.PI / 8;
+var DIRECTION_COEFF = Math.PI / 4;
+var DIRECTION = DIRECTION_COEFF / 2;
 var PADDING = 0.2;
-var GRAVITY		= 10;
+var GRAVITY		= 15;
 var DELTA		= 0.01;
 var FRAMERATE 	= 10 // milliseconds
 var c;
 var ctx;
 var simulating	= false;
 var t;
-var spawnTime = 40;
+var lowSpawnTime = 100;
+var highSpawnTime = 10;
+var spawnTime = Math.sqrt(lowSpawnTime * highSpawnTime);
 var lastSpawned;
 var rains = [];
 var splashes = [];
@@ -33,6 +36,7 @@ window.onload = function () {
   c.width = CWIDTH;
   c.height = CHEIGHT;
   ctx = c.getContext("2d");
+  c.addEventListener('mousemove', MouseMove);
   MakeItRain();
 }
 
@@ -43,7 +47,7 @@ MakeItRain = function () {
 }
 
 SpawnDrop = function () {
-  var pos = new Vec2(Math.random() * PWIDTH * (1 + PADDING) - (PWIDTH * PADDING) , PHEIGHT * (1 + PADDING));
+  var pos = new Vec2(Math.random() * PWIDTH * (1 + 2*PADDING) - (PWIDTH * PADDING) , PHEIGHT * (1 + PADDING));
   var g = new Vec2(Math.sin(DIRECTION), -1 * Math.cos(DIRECTION));
   g.Mult(GRAVITY * dropRadius * dropRadius);
   var rain = new Raindrop(dropRadius, pos, new Vec2(0, 0), g, 1, c);
@@ -148,5 +152,16 @@ UpdateRain = function (time) {
 }
 
 // ------------------------
-// 		 COLLISIONS
+// 		 MOUSE INPUT
 // ------------------------
+
+
+MouseMove = function(e) {
+  var clientRect = c.getBoundingClientRect();
+
+  var relX = (e.clientX - clientRect.left)/600;
+  var relY = 1 - (e.clientY - clientRect.top)/400;
+
+  spawnTime =  Math.pow(lowSpawnTime, (1 - relY)) * Math.pow(highSpawnTime, relY);
+  DIRECTION = (relX - 0.5) * DIRECTION_COEFF;
+}
