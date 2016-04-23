@@ -99,6 +99,8 @@ body {
 }
 #site .button1 {
   float: left;
+  margin-right: 12px;
+  margin-bottom: 12px;
   padding-left: 24px;
   padding-right: 24px;
   padding-top: 12px;
@@ -120,7 +122,7 @@ body {
   margin-right: auto;
 }
 #site div#physicswrapper {
-  margin-bottom: 96px;
+  margin-bottom: 12px;
 }
 #site div#physicswrapper div#canvaswrapper #mainCanvas {
   width: 600px;
@@ -174,6 +176,15 @@ body {
   width: 100%;
   padding-bottom: 12px;
   border-top: 1px solid #ccc;
+}
+#site .source-container {
+  text-align: center;
+  font-size: 14px;
+}
+#site .source {
+  width: 100%;
+  text-align: center;
+  color: #6688bb;
 }
 #site div#footer p {
   padding: 0;

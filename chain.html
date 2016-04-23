@@ -8,7 +8,9 @@
         <link href='http://fonts.googleapis.com/css?family=Mako|Oxygen:300' rel='stylesheet' type='text/css'>
 
         <!-- JAVASCRIPT -->
-    	<script src="js/stringphysics.js"></script>
+    	<script src="js/libvec2.js"></script>
+    	<script src="js/chain.js"></script>
+    	<script src="js/chainphysics.js"></script>
 
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <title>Physical Space</title>
@@ -31,15 +33,14 @@
 	        </h1>
 
 	        <p>
-	        	A physics simulation of a vibrating string, solving the 1-dimensional wave equation.
+	        	A physics simulation of a chain, using Hooke's law-ish rules.
 	        </p>
 
             <div id="physicswrapper" class="narrow">
                 <div id="controlbuttonwrapper">
-                    <!-- <button class="button1" id="updatebutton" onclick="UpdateString();">Update</button> -->
-                    <button class="button1" id="startbutton" onclick="StartSimulation();">Start</button>
-                    <button class="button1" id="stopbutton" onclick="StopSimulation();">Stop</button>
-                    <button class="button1" id="resetbutton" onclick="ResetString();">Reset</button>
+                    <button class="button1" id="startbutton" onclick="simulating = true;">Start</button>
+                    <button class="button1" id="stopbutton" onclick="simulating = false;">Stop</button>
+                    <button class="button1" id="resetbutton" onclick="">Reset</button>
                 </div>
 
                 <div id="canvaswrapper" class="narrow">
@@ -94,14 +95,7 @@
                         <button class="button1" id="updateparameters" onclick="UpdateParameters();">Update Parameters</button>
                     </div>
                 </div>
-
-                <div id="showparameterswrapper" class="narrow">
-                    <button class="button1" id="toggleparametersbutton" onclick="ToggleParameters();">Show Parameters</button>
-                </div>
-
             </div>
-
-            <br>
 
             <p class="source-container">
               <a class="source" href="https://github.com/harimohanraj89/WebPhysics" target="_blank">Source code</a>
